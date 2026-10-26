@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+import { site, links } from '../data/site';
+
+const buttons = [
+  { href: links.linkedin, label: 'Connect on LinkedIn', icon: 'linkedin' },
+  { href: links.resume, label: 'Download résumé', icon: 'download' },
+  { href: links.calendar, label: 'Book a call', icon: 'calendar' },
+] as const;
+
+// Empty links are dropped here, so the page never renders a button that goes nowhere.
+const shown = buttons.filter((b) => b.href);
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+---
+
+<section id="contact" class="chat" data-chat>
+  <h2 class="label" data-reveal>Contact</h2>
+
+  <div class="turn me" data-turn><p class="msg">How do I reach you?</p></div>
+  <div class="turn them" data-turn data-typing>
+    <span class="typing" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="msg card">
+      <p>Email is the fastest way.</p>
+      <div class="email">
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        <button type="button" data-copy data-copy-label>Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="turn me" data-turn><p class="msg">Where else can I find you?</p></div>
+  <div class="turn them" data-turn data-typing>
+    <span class="typing" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="msg card">
+      <p>
+        {links.linkedin && 'LinkedIn, mostly. '}Happy to talk underwriting, a deal you're working on,
+        or a role on your team.
+      </p>
+      {
+        shown.map((b) => (
+          <a
+            class="btn"
+            href={b.href}
+            {...(isExternal(b.href) ? { target: '_blank', rel: 'noopener noreferrer' } : { download: '' })}
+          >
+            <Icon name={b.icon} />
+            <span>{b.label}</span>
+            <Icon name="arrow" class="arrow" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="turn me" data-turn><p class="msg">Great, I'll reach out.</p></div>
+  <div class="turn them" data-turn data-typing>
+    <span class="typing" aria-hidden="true"><i></i><i></i><i></i></span>
+    <p class="msg">Looking forward to it.</p>
+  </div>
+</section>

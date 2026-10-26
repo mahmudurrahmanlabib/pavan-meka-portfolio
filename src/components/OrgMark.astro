@@ -1,0 +1,11 @@
+---
+import type { Org } from '../data/site';
+
+interface Props {
+  org: Org;
+}
+
+const { org } = Astro.props;
+---
+
+<span class="org"><span class="mark" aria-hidden="true">{org.mark}</span>{org.name}</span>

@@ -1,0 +1,19 @@
+---
+import { site, links } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="foot wrap mono">
+  <span>© {year} {site.name}</span>
+  <span class="foot-links">
+    {
+      links.linkedin && (
+        <a href={links.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn ↗
+        </a>
+      )
+    }
+    <a href="#top">Top ↑</a>
+  </span>
+</footer>

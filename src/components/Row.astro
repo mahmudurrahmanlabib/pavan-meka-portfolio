@@ -1,0 +1,13 @@
+---
+interface Props {
+  label: string;
+  as?: 'li' | 'div';
+}
+
+const { label, as: Tag = 'li' } = Astro.props;
+---
+
+<Tag class="row" data-reveal>
+  <span class="date">{label}</span>
+  <div class="row-body"><slot /></div>
+</Tag>

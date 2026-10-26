@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/pavan-meka.jpg';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Section from '../components/Section.astro';
+import Row from '../components/Row.astro';
+import OrgMark from '../components/OrgMark.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { site, orgs, experience, focus, toolkit, projects, education, personal } from '../data/site';
+---
+
+<Base>
+  <Header />
+
+  <main class="wrap">
+    <section id="about" class="intro">
+      <div class="avatar" style="--i:0">
+        <Image
+          src={portrait}
+          alt={`Portrait of ${site.name}`}
+          width={96}
+          height={96}
+          densities={[2, 3]}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <h1 style="--i:1">{site.name}</h1>
+      <p class="role" style="--i:2">{site.role}</p>
+      <p class="bio" style="--i:3">
+        Finance grad from <OrgMark org={orgs.duke} /> and a licensed real estate broker in North Carolina.
+        I underwrite commercial real estate, from NOI and DSCR to ARGUS rollover and levered IRR, and build
+        the models behind the investment call.
+      </p>
+      <button class="hint" type="button" style="--i:4" data-copy>
+        <span class="key-only">Press <kbd>C</kbd> to copy my email</span>
+        <span class="touch-only">Tap to copy my email</span>
+      </button>
+    </section>
+
+    <Section
+      id="work"
+      label="Experience"
+      lead="Deal-side work across private credit and investment banking, plus a broker's license since 2020."
+    >
+      <ol class="rows">
+        {
+          experience.map((job) => (
+            <Row label={job.date}>
+              <h3>
+                {job.title} {job.org && <OrgMark org={job.org} />}
+              </h3>
+              <p>{job.body}</p>
+            </Row>
+          ))
+        }
+      </ol>
+    </Section>
+
+    <Section label="What I do">
+      <p class="big" data-reveal>{focus}</p>
+    </Section>
+
+    <Section label="Toolkit" class="tight">
+      <div class="rows">
+        {
+          toolkit.map((group) => (
+            <Row label={group.label} as="div">
+              <ul class="chips">
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </Row>
+          ))
+        }
+      </div>
+    </Section>
+
+    <Section id="projects" label="Selected work" lead="Underwriting and investment cases I've built end to end.">
+      <ol class="rows">
+        {
+          projects.map((p) => (
+            <Row label={p.tag}>
+              <h3 class="split">
+                <span>{p.title}</span>
+                <span class="stat" data-stat={p.stat} style={`--len:${p.stat.length}`}>
+                  {p.stat}
+                </span>
+              </h3>
+              <p>{p.body}</p>
+            </Row>
+          ))
+        }
+      </ol>
+    </Section>
+
+    <Section label="Education">
+      <ol class="rows">
+        {
+          education.map((school) => (
+            <Row label={school.date}>
+              <h3>
+                {school.title} <OrgMark org={school.org} />
+              </h3>
+              <p>{school.body}</p>
+            </Row>
+          ))
+        }
+      </ol>
+    </Section>
+
+    <Section label="Beyond the desk" lead="A few things outside the models." class="tight">
+      <ul class="rows">
+        {
+          personal.map((item) => (
+            <Row label={item.label}>
+              <p>{item.body}</p>
+            </Row>
+          ))
+        }
+      </ul>
+    </Section>
+
+    <Contact />
+  </main>
+
+  <Footer />
+
+  <script>
+    import '../scripts/main';
+  </script>
+</Base>

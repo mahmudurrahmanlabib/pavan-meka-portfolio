@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const nav = [
+  { href: '#about', label: 'About' },
+  { href: '#work', label: 'Work' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="top wrap" id="top">
+  <span class="mono loc">{site.location}<span data-clock data-tz={site.timeZone}></span></span>
+  <nav class="mono" aria-label="Sections">
+    {nav.map((item) => <a href={item.href} data-nav>/{item.label}</a>)}
+    <button class="theme" type="button" data-theme-toggle aria-label="Toggle dark mode">
+      <Icon name="moon" class="i-moon" />
+      <Icon name="sun" class="i-sun" />
+    </button>
+  </nav>
+</header>
